@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Employee Performance Review</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h2 { color: #333; border-bottom: 2px solid #ccc; padding-bottom: 10px; }
+    .performance-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    .performance-table th, .performance-table td { border: 1px solid #ddd; padding: 10px; text-align: left; vertical-align: top; }
+    .performance-table th { background-color: #f2f2f2; color: #333; font-weight: bold; }
+    .performance-table tr:nth-child(even) { background-color: #f9f9f9; }
+    .performance-table td:nth-child(2), .performance-table td:nth-child(3), 
+    .performance-table td:nth-child(4), .performance-table td:nth-child(5), 
+    .performance-table td:nth-child(6), .performance-table td:last-child { text-align: center; }
+</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button
+      data-mdb-collapse-init
+      class="navbar-toggler"
+      type="button"
+      data-mdb-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
+        <a class="nav-link" href="#">Features</a>
+        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link disabled"
+          >Disabled</a
+        >
+      </div>
+    </div>
+  </div>
+</nav>
+    <h2> Employee Performance Review Summary</h2>
+    <div style="overflow-x:auto;">
+        <table class="performance-table">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Days Present</th>
+                    <th>Days Absent</th>
+                    <th>Approved Leave Requests</th>
+                    <th>Pending Leave Requests</th>
+                    <th>Denied Leave Requests</th>
+                    <th>Manager Comments</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sibongile Nkosi</td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>Good attendance record, though the recent single absence needs to be followed up as no approved leave was on file. Please clarify pending personal leave.</td>
+                    <td>4 (Good)</td>
+                </tr>
+                <tr>
+                    <td>Lungile Moyo</td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>Attendance is solid. One absence noted but an approved vacation is handled. The denied request should be reviewed for clarity in the process.</td>
+                    <td>3 (Needs Improvement)</td>
+                </tr>
+                <tr>
+                    <td>Thabo Molefe</td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>Consistent presence. The pending personal leave request should be prioritized for a decision this week. Follow up on the single unexplained absence.</td>
+                    <td>4 (Good)</td>
+                </tr>
+                <tr>
+                    <td>Keshav Naidoo</td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>Excellent record: approved bereavement leave handled correctly, with no pending issues. Attendance is strong.</td>
+                    <td>5 (Excellent)</td>
+                </tr>
+                <tr>
+                    <td>Zanele Khumalo</td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>Attendance is good overall. The pending childcare leave request needs immediate review and resolution.</td>
+                    <td>4 (Good)</td>
+                </tr>
+                <tr>
+                    <td>Sipho Zulu</td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>Highly reliable attendance. Approved sick leave indicates proper protocol usage. No outstanding leave issues.</td>
+                    <td>5 (Excellent)</td>
+                </tr>
+                <tr>
+                    <td>Naledi Moeketsi</td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>Good attendance. The outstanding vacation request (July 22) must be processed, especially as the absence date (July 28) is close.</td>
+                    <td>4 (Good)</td>
+                </tr>
+                <tr>
+                    <td>Farai Gumbo</td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>Solid performer. Approved medical appointment leave handled smoothly. No further actions needed regarding time off.</td>
+                    <td>5 (Excellent)</td>
+                </tr>
+                <tr>
+                    <td>Karabo Dlamini</td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>Consistent attendance. The denial of the childcare leave request is noted; ensure communication on the reason was clear. Follow up on the single unexplained absence.</td>
+                    <td>3 (Needs Improvement)</td>
+                </tr>
+                <tr>
+                    <td>Fatima Patel</td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>Good presence. Please follow up on the pending vacation request to ensure future scheduling is clear.</td>
+                    <td>4 (Good)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
