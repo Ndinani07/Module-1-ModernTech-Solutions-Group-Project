@@ -3,62 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="employee_style.css">
-    <title>Employee_management</title>
-    
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Dashboard Shared CSS -->
+    <link rel="stylesheet" href="css/board.css">
+
+    <title>Employee Management - ModernTech HR</title>
 </head>
 <body>
-    <header>
-        <div>
-            <h1 class="logo">Employee Management System</h1>
+
+<div class="d-flex">
+
+    <!-- SIDEBAR (same as dashboard) -->
+    <nav class="sidebar p-3" id="sidebar">
+        <div class="d-flex align-items-center mb-4">
+            <i class="bi bi-people-fill fs-3 me-2"></i>
+            <h5 class="mb-0">ModernTech HR</h5>
         </div>
-        
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#employeeNavbar" aria-controls="employeeNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+
+        <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.html"><i class="bi bi-grid-1x2-gap me-2"></i> Dashboard</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" href="employee_management.html"><i class="bi bi-people-fill me-2"></i> Employees</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="payroll.html"><i class="bi bi-wallet2 me-2"></i> Payroll</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="time_leave.html"><i class="bi bi-calendar-event me-2"></i> Time & Leave</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="attendance.html"><i class="bi bi-calendar-check me-2"></i> Attendance</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="reviews.html"><i class="bi bi-star me-2"></i> Reviews</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="login.html"><i class="bi bi-box-arrow-in-right me-2"></i> Login</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN AREA -->
+    <div class="flex-grow-1 main-area">
+
+        <!-- HEADER (same as dashboard) -->
+        <header class="app-header d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center">
+                <button id="toggleSidebar" class="btn btn-sm btn-light me-3 d-md-none">
+                    <i class="bi bi-list"></i>
                 </button>
-                
-                <div class="collapse navbar-collapse" id="employeeNavbar">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.html">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="employee_management.html">Employees</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="payroll.html">Payroll</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="time_leave.html">Time & Leave</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="login.html">Login</a>
-                        </li>
-                    </ul>
+                <h4 class="mb-0">Employee Management</h4>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <div class="me-3 text-white small">Logged in as HR Admin</div>
+                <div class="avatar bg-white rounded-circle d-flex align-items-center justify-content-center"
+                     style="width:36px;height:36px">
+                    <i class="bi bi-person-fill text-primary"></i>
                 </div>
             </div>
-        </nav>
-    </header>
-    
-    <table class="table table-striped-columns">
-        <thead>
-          <tr class="bg-info">
-            <th>Employee ID </th>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Department</th>
-            <th>Contact</th>
-          </tr> 
-        </thead>
-        <tbody id="myTable">
-            </tbody>
-    </table>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
-    <script type="module" src="employee_script.js"></script>
+        </header>
+
+        <!-- PAGE CONTENT -->
+        <section id="employee-management">
+
+            <!-- Add New Employee Button -->
+            <div class="d-flex justify-content-end mb-3">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                    <i class="bi bi-person-plus me-1"></i> Add New Employee
+                </button>
+            </div>
+
+            <!-- Employee Table -->
+            <div class="card p-3">
+                <h5 class="mb-3">Employee Directory</h5>
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Department</th>
+                                <th>Contact</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</div>
+
+<!-- ADD EMPLOYEE MODAL -->
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Employee</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Employee ID</label>
+                        <input type="number" class="form-control" placeholder="Enter employee ID">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" placeholder="Enter full name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Position</label>
+                        <input type="text" class="form-control" placeholder="Enter job position">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Department</label>
+                        <input type="text" class="form-control" placeholder="Enter department">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Contact Email</label>
+                        <input type="email" class="form-control" placeholder="Enter contact email">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary">Save Employee</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="employee_script.js"></script>
+
 </body>
 </html>

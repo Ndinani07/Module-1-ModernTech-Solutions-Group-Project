@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Attendance - ModernTech HR</title>
+
+  <!-- The Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- The Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- The Shared Dashboard CSS -->
+  <link href="css/board.css" rel="stylesheet">
+
+  <!-- The Attendance Custom CSS -->
+  <link rel="stylesheet" href="attendance_css.css">
+</head>
+
+<body>
+<div class="d-flex">
+  
+  <nav class="sidebar p-3" id="sidebar">
+    <div class="d-flex align-items-center mb-4">
+      <i class="bi bi-people-fill fs-3 me-2"></i>
+      <h5 class="mb-0">ModernTech HR</h5>
+    </div>
+
+    <ul class="nav flex-column">
+      <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="bi bi-grid-1x2-gap me-2"></i> Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link" href="employee_management.html"><i class="bi bi-people-fill me-2"></i> Employees</a></li>
+      <li class="nav-item"><a class="nav-link" href="payroll.html"><i class="bi bi-wallet2 me-2"></i> Payroll</a></li><li class="nav-item">
+      <li class="nav-item"><a class="nav-link" href="time_leave.html"><i class="bi bi-calendar-event me-2"></i> Time & Leave</a></li>
+      <li class="nav-item"><a class="nav-link active" href="attendance.html"><i class="bi bi-calendar-check me-2"></i> Attendance</a></li>
+      <li class="nav-item"><a class="nav-link" href="reviews.html"><i class="bi bi-star me-2"></i> Reviews</a></li>
+      <li class="nav-item"><a class="nav-link" href="login.html"><i class="bi bi-box-arrow-in-right me-2"></i> Login</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN AREA -->
+  <div class="flex-grow-1 main-area">
+
+    <!-- The HEADER -->
+    <header class="app-header d-flex justify-content-between align-items-center mb-4">
+      <div class="d-flex align-items-center">
+        <button id="toggleSidebar" class="btn btn-sm btn-light me-3 d-md-none">
+          <i class="bi bi-list"></i>
+        </button>
+        <h4 class="mb-0">Attendance</h4>
+      </div>
+
+      <div class="d-flex align-items-center">
+        <div class="me-3 text-white small">Logged in as HR Admin</div>
+        <div class="avatar bg-white rounded-circle d-flex align-items-center justify-content-center"
+             style="width:36px;height:36px">
+          <i class="bi bi-person-fill text-primary"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <section id="attendance" class="p-2">
+
+      <h2 class="mb-3">Daily Attendance</h2>
+
+      <!-- SEARCH + ADD EMPLOYEE BUTTON -->
+      <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+        <div class="w-50">
+          <label for="employeeSearch" class="form-label">Search Employee:</label>
+          <input type="text" id="employeeSearch" class="form-control" placeholder="Enter name or ID">
+        </div>
+
+        <!-- Add Employee Button -->
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+          <i class="bi bi-plus-circle me-1"></i> Add Employee
+        </button>
+      </div>
+
+      <!-- EMPLOYEE PROFILE -->
+      <div id="employeeProfile" class="p-3 mb-4 rounded border d-none" style="background:#f8f9fa;">
+        <h4>Employee Profile</h4>
+        <p><strong>ID:</strong> <span id="profileId"></span></p>
+        <p><strong>Name:</strong> <span id="profileName"></span></p>
+      </div>
+
+      <!-- ATTENDANCE SEARCH RESULTS -->
+      <h4>Attendance Records</h4>
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="searchAttendanceResults"></tbody>
+      </table>
+
+      <!-- LEAVE SEARCH RESULTS -->
+      <h4 class="mt-4">Leave Requests</h4>
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="searchLeaveResults"></tbody>
+      </table>
+
+      <!-- Date Picker -->
+      <label class="mt-4">Select Date:</label>
+      <input type="date" id="attendanceDateFilter" class="form-control w-25 mb-3"
+             onchange="filterAttendanceByDate(this.value)">
+
+      <!-- Status Filters -->
+      <div class="btn-group mt-3" role="group">
+        <button class="btn btn-secondary" onclick="setStatusFilter('All')">Show All</button>
+        <button class="btn btn-success" onclick="setStatusFilter('Present')">Present Only</button>
+        <button class="btn btn-danger" onclick="setStatusFilter('Absent')">Absent Only</button>
+      </div>
+
+      <!-- Attendance Table -->
+      <table class="table table-bordered table-hover mt-4">
+        <thead class="table-primary">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="attendanceTableBody"></tbody>
+      </table>
+
+      <hr>
+
+      <!-- LEAVE FILTER BUTTONS -->
+      <div class="btn-group mt-3" role="group">
+        <button onclick="filterLeaveTable('All')" class="btn btn-secondary">All Leaves</button>
+        <button onclick="filterLeaveTable('Approved')" class="btn btn-success">Approved</button>
+        <button onclick="filterLeaveTable('Pending')" class="btn btn-warning">Pending</button>
+        <button onclick="filterLeaveTable('Denied')" class="btn btn-danger">Denied</button>
+      </div>
+
+      <h2 class="mt-4">Pending Leave Requests</h2>
+
+      <table class="table table-bordered table-hover leave-table">
+        <thead class="table-primary">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="leaveTableBody"></tbody>
+      </table>
+
+    </section>
+  </div>
+</div>
+
+
+<!-- ADD EMPLOYEE MODAL -->
+<div class="modal fade" id="addEmployeeModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Add Employee</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Employee ID</label>
+          <input type="text" class="form-control" placeholder="Enter ID">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Employee Name</label>
+          <input type="text" class="form-control" placeholder="Enter Name">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Status</label>
+          <select class="form-select">
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-primary">Add</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="attendance_js.js"></script>
+
+</body>
+</html>
