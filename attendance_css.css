@@ -1,0 +1,15 @@
+.present-day {
+    color: green;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.absent-day {
+    color: red;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.navbar-custom {
+    background-color: #0d1b2a !important;
+}
