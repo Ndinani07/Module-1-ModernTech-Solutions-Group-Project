@@ -1,64 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time Off Management</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Time & Leave - ModernTech HR</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      height: 100vh;
+      background-color: #f0f4ff;
+    }
+    .sidebar {
+      width: 220px;
+      background-color: #1765d1; /* dashboard blue */
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
+      user-select: none;
+    }
+    .sidebar h2 {
+      font-weight: 600;
+      margin-bottom: 30px;
+      font-size: 1.4rem;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar ul li {
+      margin-bottom: 12px;
+    }
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      display: block;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    .sidebar ul li a.active, 
+    .sidebar ul li a:hover {
+      background-color: #1f7efb;
+    }
+
+    .main-area {
+      flex-grow: 1;
+      background-color: white;
+      padding: 24px 32px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    .header {
+      background-color: #1765d1;
+      color: white;
+      font-weight: 600;
+      font-size: 1.25rem;
+      padding: 12px 24px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .search-container {
+      margin-bottom: 20px;
+      max-width: 320px;
+    }
+    .search-container input[type="search"] {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      box-sizing: border-box;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+    }
+    .search-container input[type="search"]:focus {
+      border-color: #1765d1;
+      box-shadow: 0 0 5px rgba(23, 101, 209, 0.4);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    thead tr {
+      background-color: #f6f8ff;
+    }
+    th, td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+      vertical-align: middle;
+    }
+    tbody tr:hover {
+      background-color: #f0f4ff;
+    }
+
+    .status-badge {
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      color: white;
+      display: inline-block;
+      cursor: pointer;
+      user-select: none;
+      width: 100px;
+      text-align: center;
+      border: none;
+    }
+    select.status-badge {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-color: transparent;
+      color: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      border: none;
+      outline-offset: 2px;
+      text-align-last: center;
+      padding-right: 10px;
+    }
+    select.status-badge.pending {
+      background-color: #ffc107; /* yellow */
+      color: #212529;
+    }
+    select.status-badge.approved {
+      background-color: #198754; /* green */
+    }
+    select.status-badge.denied {
+      background-color: #dc3545; /* red */
+    }
+    .no-leaves {
+      color: #6c757d;
+      font-weight: 600;
+      font-style: italic;
+    }
+  </style>
 </head>
 <body>
-    <h1>ModernTech Solutions Time Off & Leave System</h1>
-    <div id="loading-indicator">Loading user profile and data...</div>
+  <nav class="sidebar" aria-label="Main Navigation">
+    <h2>ModernTech HR</h2>
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="employee_management.html">Employee</a></li>
+      <li><a href="payroll.html">Payroll</a></li>
+      <li><a href="time_leave.html" class="active">Time&Leave</a></li>
+      <li><a href="reviews.html">Reviews</a></li>
+    </ul>
+  </nav>
 
-    <section id="employee-view" style="display: none;">
-        <h2>Submit New Request</h2>
-        <p>Your Current Available Vacation Balance: <strong id="vacation-balance">...</strong></p>
-        
-        <form id="time-off-form">
-            <label for="leave-type">Leave Type:</label>
-            <select id="leave-type" required>
-                </select>
-            
-            <label for="start-date">Start Date:</label>
-            <input type="date" id="start-date" required>
-            
-            <label for="end-date">End Date:</label>
-            <input type="date" id="end-date" required>
+  <main class="main-area">
+    <header class="header" role="banner">
+      <div>Time & Leave</div>
+      <div>Logged in as HR Admin</div>
+    </header>
 
-            <label for="duration">Duration (Days):</label>
-            <input type="number" id="duration" step="0.5" min="0.5" required>
-            
-            <label for="reason">Reason/Notes:</label>
-            <textarea id="reason" rows="3"></textarea>
-            
-            <button type="submit">Submit Request</button>
-            <p id="submission-feedback"></p>
-        </form>
+    <div class="search-container">
+      <label for="searchInput" class="visually-hidden">Search employee by name</label>
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Search employee by name..."
+        aria-label="Search employee by name"
+        autocomplete="off"
+      />
+    </div>
 
-        <hr>
+    <table role="table" aria-label="Time and Leave Table">
+      <thead>
+        <tr>
+          <th scope="col">Employee Name</th>
+          <th scope="col">Days Present</th>
+          <th scope="col">Days Absent</th>
+          <th scope="col">Approved Leave</th>
+          <th scope="col">Pending Leave</th>
+          <th scope="col">Denied Leave</th>
+          <th scope="col">Leave Status</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- rows rendered by JS -->
+      </tbody>
+    </table>
+    <p id="noResultsMsg" style="display:none; margin-top:1rem; color:#888;">No employees found.</p>
+  </main>
 
-        <h3>My Request History</h3>
-        <table id="employee-history-table">
-            <thead>
-                <tr><th>Dates</th><th>Type</th><th>Status</th><th>Action</th></tr>
-            </thead>
-            <tbody>
-                </tbody>
-        </table>
-    </section>
+  <script>
+    (() => {
+      const employees = [
+        { name: "Sibongile Nkosi", present: 20, absent: 2, approved: 1, pending: 0, denied: 1, status: "denied" },
+        { name: "Lungile Moyo", present: 18, absent: 3, approved: 2, pending: 1, denied: 0, status: "pending" },
+        { name: "Thabo Molefe", present: 22, absent: 0, approved: 0, pending: 0, denied: 0, status: "none" },
+        { name: "Keshav Naidoo", present: 19, absent: 1, approved: 1, pending: 0, denied: 1, status: "denied" },
+        { name: "Zanele Khumalo", present: 21, absent: 1, approved: 0, pending: 1, denied: 0, status: "pending" },
+        { name: "Sipho Zulu", present: 20, absent: 2, approved: 2, pending: 0, denied: 0, status: "approved" },
+        { name: "Naledi Moeketsi", present: 17, absent: 4, approved: 1, pending: 1, denied: 0, status: "pending" },
+        { name: "Farai Gumbo", present: 23, absent: 0, approved: 0, pending: 0, denied: 0, status: "none" },
+        { name: "Karabo Dlamini", present: 19, absent: 2, approved: 0, pending: 0, denied: 2, status: "denied" },
+        { name: "Fatima Patel", present: 18, absent: 3, approved: 1, pending: 0, denied: 0, status: "approved" }
+      ];
 
-    <section id="hr-manager-view" style="display: none;">
-        <h2>Pending Leave Approvals</h2>
-        <table id="approval-queue-table">
-            <thead>
-                <tr>
-                    <th>Employee</th><th>Type</th><th>Dates</th><th>Duration</th><th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                </tbody>
-        </table>
-    </section>
+      const tableBody = document.getElementById("tableBody");
+      const searchInput = document.getElementById("searchInput");
+      const noResultsMsg = document.getElementById("noResultsMsg");
 
-    <script src="timeoff-script.js"></script>
+      function renderStatusSelect(status) {
+        const select = document.createElement("select");
+        select.className = "status-badge " + status;
+        select.setAttribute("aria-label", "Leave status");
+
+        const options = [
+          { value: "pending", label: "Pending" },
+          { value: "approved", label: "Approved" },
+          { value: "denied", label: "Denied" },
+          { value: "none", label: "No Leaves" }
+        ];
+        for (const opt of options) {
+          const option = document.createElement("option");
+          option.value = opt.value;
+          option.textContent = opt.label;
+          select.appendChild(option);
+        }
+        select.value = status || "none";
+
+        return select;
+      }
+
+      function onStatusChange(e, employee) {
+        employee.status = e.target.value;
+        renderTable(currentFiltered);
+      }
+
+      function renderTable(list) {
+        currentFiltered = list;
+        tableBody.innerHTML = "";
+        if (list.length === 0) {
+          noResultsMsg.style.display = "block";
+          return;
+        } else {
+          noResultsMsg.style.display = "none";
+        }
+
+        for (const emp of list) {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${emp.name}</td>
+            <td>${emp.present}</td>
+            <td>${emp.absent}</td>
+            <td>${emp.approved}</td>
+            <td>${emp.pending}</td>
+            <td>${emp.denied}</td>
+            <td></td>
+          `;
+          const select = renderStatusSelect(emp.status);
+          select.addEventListener("change", (e) => onStatusChange(e, emp));
+          tr.lastElementChild.appendChild(select);
+          tableBody.appendChild(tr);
+        }
+      }
+
+      let currentFiltered = employees;
+
+      searchInput.addEventListener("input", () => {
+        const query = searchInput.value.toLowerCase().trim();
+        const filtered = employees.filter(emp => emp.name.toLowerCase().includes(query));
+        renderTable(filtered);
+      });
+
+      renderTable(employees);
+    })();
+  </script>
 </body>
 </html>
+
+
