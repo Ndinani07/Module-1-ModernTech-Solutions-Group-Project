@@ -1,7 +1,7 @@
 /* Reuse the same root variables as dashboard for consistency */
 :root {
   --primary-color: #2d8cf0;
-  --secondary-color: #2b6fc3;
+  --secondary-color: #2d8cf0;
   --success-color: #28a745;
   --warning-color: #ffc107;
   --card-bg: #ffffff;
@@ -17,128 +17,80 @@ body {
   padding-top: 56px; /* Default Bootstrap navbar height */
 }
 
-/* Navbar */
-.navbar {
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  position: fixed; /* Fixed position for top navbar */
+/* Sidebar layout */
+.sidebar {
+  width: 240px;
+  background: #2d8cf0;
+  position: fixed;
   top: 0;
-  width: 100%;
-  z-index: 1000; /* Ensure navbar stays above content */
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid rgba(0,0,0,0.05);
+  z-index: 1030;
+  padding-top: 1.5rem;
 }
 
-.navbar-brand {
-  font-weight: bold;
+/* When sidebar is collapsed on small screens */
+.sidebar.collapsed {
+  transform: translateX(-100%);
+  transition: transform .25s ease;
 }
 
-/* Style for the horizontal navigation items */
-.navbar-nav {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1rem; /* Add space between nav items */
+/* main topbar sits above content (but after sidebar in DOM) */
+.main-topbar {
+  margin-left: 240px;
+  z-index: 1020;
+  position: sticky;
+  top: 0;
 }
 
-.navbar-nav .nav-link {
-  color: rgba(255,255,255,0.9);
-  transition: all 0.3s ease;
-  padding: 0.5rem 1rem; /* Add some padding for better click area */
-}
-
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link.active {
-  color: white;
-  background: rgba(255,255,255,0.15);
-  border-radius: 8px;
-  transform: translateY(-2px);
-}
-
-.avatar {
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease;
-}
-.avatar:hover {
-  transform: scale(1.1);
-}
-
-/* Main Content Area */
+/* Main content - leave space for sidebar */
 .main-content {
-  /* No need for margin-left as sidebar is removed */
-  padding: 25px 15px; /* Add horizontal padding */
-  min-height: calc(100vh - 56px); /* Adjust height to account for navbar */
+  margin-left: 240px;
+  padding: 1.5rem;
 }
 
-/* Cards */
-.card-sm, .card {
-  border-radius: 15px;
-  background: var(--card-bg);
-  box-shadow: 0 6px 20px var(--card-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card-sm:hover, .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px var(--card-shadow);
+/* Sidebar nav link styling */
+.sidebar .nav-link {
+  color: #ffffff;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
 }
 
-/* Stats cards colors */
-#statTotalPaid { color: var(--primary-color); font-weight: 700; }
-#statTotalCost { color: var(--success-color); font-weight: 700; }
-
-/* Table */
-.table-hover tbody tr:hover {
-  background: rgba(45,140,240,0.1);
-  transition: background 0.3s ease;
-}
-.table thead {
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-  color: #fff;
-}
-.table th, .table td {
-  vertical-align: middle;
+.sidebar .nav-link .bi {
+  font-size: 1.05rem;
 }
 
-/* Buttons */
-.btn-outline-primary {
-  transition: all 0.3s ease;
-}
-.btn-outline-primary:hover {
-  background: var(--primary-color);
-  color: #fff;
-  transform: scale(1.05);
+/* Active link */
+.sidebar .nav-link.active {
+  background-color: rgba(13,110,253,0.08); /* light primary tint */
+  color: #ffffff;
+  font-weight: 600;
 }
 
-/* Modal */
-.modal-content {
-  border-radius: 15px;
-  background: #fff;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-.modal-header {
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-  color: #fff;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+/* Hover effect */
+.sidebar .nav-link:hover {
+  background-color: rgba(0,0,0,0.03);
+  color: #009dff;
 }
 
-/* Small animations */
-@keyframes fadeInUp {
-  0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+  }
+  .sidebar.collapsed {
+    transform: translateX(0); /* toggled open state */
+  }
+  .main-topbar {
+    margin-left: 0;
+  }
+  .main-content {
+    margin-left: 0;
+    padding-top: 4.5rem; /* allow topbar space */
+  }
 }
-.card, .table-responsive {
-  animation: fadeInUp 0.5s ease forwards;
-}
-
-/* Responsive adjustments for Navbar - Ensure it stays horizontal on all screens */
-/* Remove the collapse behavior by overriding default Bootstrap navbar-toggler styles */
-.navbar-toggler {
-  display: none; /* Hide the toggle button completely */
-}
-
-.navbar-collapse {
-  display: flex !important; /* Force the collapse content to be visible */
-  flex-basis: auto; /* Allow the collapse area to grow */
-}
-
-/* Adjust main content padding on smaller screens if needed */
-/* The layout should now be horizontal by default */
